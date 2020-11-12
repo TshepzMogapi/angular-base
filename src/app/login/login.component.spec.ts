@@ -110,7 +110,13 @@ describe("LoginComponent UI Test", () => {
     const passwordInput = fixture.debugElement.nativeElement.querySelector(
       "#inputPassword"
     );
+
+    const button = fixture.debugElement.nativeElement.querySelector(
+      "#submitButton"
+    );
+
     expect(usernameInput).toBeDefined();
     expect(passwordInput).toBeDefined();
+    expect(button).toBeDefined();
   });
 });
