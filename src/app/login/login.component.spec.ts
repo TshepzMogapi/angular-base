@@ -1,8 +1,4 @@
-import {
-  async,
-  ComponentFixture,
-  TestBed,
-} from "@angular/core/testing";
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { FormBuilder, ReactiveFormsModule } from "@angular/forms";
 import { Store, StoreModule } from "@ngrx/store";
 import { LoginComponent } from "./login.component";
@@ -27,6 +23,13 @@ describe("LoginComponent Unit Test", () => {
     store = TestBed.get(Store);
   }));
 
+  const getStateAndUpdateForm = () => {
+    store.select("login").subscribe((userState) => {
+      component.loginForm.controls["username"].setValue(userState.username);
+      component.loginForm.controls["password"].setValue(userState.password);
+    });
+  };
+
   it("successfully created component", () => {
     component.ngOnInit();
     expect(component).toBeTruthy();
@@ -48,10 +51,8 @@ describe("LoginComponent Unit Test", () => {
     };
     store.dispatch(new LoginActions.EnterUsernamePassword(up));
 
-    store.select("login").subscribe((userState) => {
-      component.loginForm.controls["username"].setValue(userState.username);
-      component.loginForm.controls["password"].setValue(userState.password);
-    });
+    getStateAndUpdateForm();
+
     expect(component.loginForm.valid).toBeTruthy();
   });
 
@@ -61,10 +62,8 @@ describe("LoginComponent Unit Test", () => {
     };
     store.dispatch(new LoginActions.UpdatePassword(p));
 
-    store.select("login").subscribe((userState) => {
-      component.loginForm.controls["username"].setValue(userState.username);
-      component.loginForm.controls["password"].setValue(userState.password);
-    });
+    getStateAndUpdateForm();
+
     expect(component.loginForm.controls["username"].valid).toBeTruthy();
   });
 
@@ -74,29 +73,22 @@ describe("LoginComponent Unit Test", () => {
     };
     store.dispatch(new LoginActions.UpdatePassword(p));
 
-    store.select("login").subscribe((userState) => {
-      component.loginForm.controls["username"].setValue(userState.username);
-      component.loginForm.controls["password"].setValue(userState.password);
-    });
+    getStateAndUpdateForm();
+
     expect(component.loginForm.controls["password"].valid).toBeFalsy();
   });
 
   it("Username should be invalid", () => {
     let u = {
-      username: "2.34@io.8"
-    }
+      username: "2.34@io.8",
+    };
 
     store.dispatch(new LoginActions.UpdateUsername(u));
 
-    store.select("login").subscribe((userState) => {
-      component.loginForm.controls["username"].setValue(userState.username);
-      component.loginForm.controls["password"].setValue(userState.password);
-    });
+    getStateAndUpdateForm();
 
     expect(component.loginForm.controls["username"].valid).toBeTruthy();
-
-  })
-
+  });
 });
 
 describe("LoginComponent UI Test", () => {
