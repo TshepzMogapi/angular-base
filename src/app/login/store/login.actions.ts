@@ -1,19 +1,28 @@
 import { Action } from "@ngrx/store";
-import { User } from 'src/app/shared/user.model';
 
-export const LOGIN = "LOGIN";
 export const ENTER_USERNAME_PASSWORD = "ENTER_USERNAME_PASSWORD";
-
-export class Login implements Action {
-  readonly type = LOGIN;
-
-  constructor(public payload: User) {}
-}
+export const UPDATE_PASSWORD = "UPDATE_PASSWORD";
+export const UPDATE_USERNAME = "UPDATE_USERNAME";
 
 export class EnterUsernamePassword implements Action {
   readonly type = ENTER_USERNAME_PASSWORD;
 
-  constructor(public payload: User) {}
+  constructor(public payload: {username: string, password: string}) {}
 }
 
-export type LoginActions = Login | EnterUsernamePassword;
+export class UpdatePassword implements Action {
+  readonly type = UPDATE_PASSWORD;
+
+  constructor(public payload: {password: string}) {}
+}
+
+export class UpdateUsername implements Action {
+  readonly type = UPDATE_USERNAME;
+
+  constructor(public payload: {username: string}) {}
+}
+
+export type LoginActions =
+  | EnterUsernamePassword
+  | UpdatePassword
+  | UpdateUsername;

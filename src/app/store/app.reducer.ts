@@ -4,6 +4,6 @@ import { ActionReducerMap } from '@ngrx/store';
 export interface AppState {
   login: fromLogin.State;
 }
-export const appReducer: ActionReducerMap<AppState> = {
+export const appReducer: ActionReducerMap<{}> = {
   login: fromLogin.loginReducer
 }

@@ -1,25 +1,32 @@
-import { User } from "src/app/shared/user.model";
 import * as LoginActions from "./login.actions";
 
 export interface State {
-  user: User;
+  username: string;
+  password: string;
 }
 const initialState: State = {
-  user: new User("", ""),
+  username: "tshepzmogapi@gmail.com",
+  password: "Password468",
 };
 
 export function loginReducer(
-  state = initialState,
+  state: State = initialState,
   action: LoginActions.LoginActions
 ) {
   switch (action.type) {
     case LoginActions.ENTER_USERNAME_PASSWORD:
-      const user = new User(action.payload.email, action.payload.password);
       return {
         ...state,
-        user: user
-      }
-
+        username: action.payload.username,
+        password: action.payload.password,
+      };
+    case LoginActions.UPDATE_PASSWORD:
+      let newPassword = action.payload.password;
+      return {
+        ...state,
+        username: state.username,
+        password: newPassword
+      };
     default:
       return state;
   }
